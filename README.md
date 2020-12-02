@@ -1,2 +1,2 @@
-# mybookshelf-dotnet-api
+# MyBookshelf Dotnet Core API
 MyBookshelf Application API
