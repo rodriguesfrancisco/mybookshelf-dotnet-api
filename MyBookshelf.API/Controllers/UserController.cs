@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MyBookshelf.API.Extensions;
 using MyBookshelf.Application.Commands.CreateUser;
 using MyBookshelf.Application.Queries.GetUserById;
 using System;
@@ -13,22 +14,23 @@ namespace MyBookshelf.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
+
         public UserController(IMediator mediator)
         {
             _mediator = mediator;
         }
+
         [HttpPost]
-        public void CreateNewUser([FromBody] CreateUser command)
+        public IActionResult CreateNewUser([FromBody] CreateUser command)
         {
-            _mediator.Send(command);
+            return this.ProcessCommand(command, _mediator);
         }
 
         [HttpGet("{id}")]
-        public UserViewModel GetUserById(int id)
+        public IActionResult GetUserById(int id)
         {
             var getUserByIdCommand = new GetUserById() { Id = id };
-            var result = _mediator.Send(getUserByIdCommand);
-            return result.Result;
+            return this.ProcessCommand(getUserByIdCommand, _mediator);
         }
     }
 }
