@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyBookshelf.API.Extensions;
 using MyBookshelf.Application.Commands.CreateUser;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 namespace MyBookshelf.API.Controllers
 {
     [Route("api/users")]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -22,6 +24,7 @@ namespace MyBookshelf.API.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult CreateNewUser([FromBody] CreateUser command)
         {
             return this.ProcessCommand(command, _mediator);
@@ -35,6 +38,7 @@ namespace MyBookshelf.API.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public IActionResult Login([FromBody] LoginUser command)
         {
             return this.ProcessCommand(command, _mediator);

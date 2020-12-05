@@ -18,7 +18,7 @@ namespace MyBookshelf.Application.Security
             _configuration = configuration;
         }
 
-        public string GenerateToken(string email)
+        public string GenerateToken(string email, int userId)
         {
             var issuer = _configuration["MyBookshelf:JwtTokenIssuer"];
             var audience = _configuration["MyBookshelf:JwtTokenAudience"];
@@ -27,12 +27,13 @@ namespace MyBookshelf.Application.Security
 
             var claims = new List<Claim>
             {
-                new Claim("userName", email)
+                new Claim("userName", email),
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString())
             };
 
             var token = new JwtSecurityToken(
-                issuer,
-                audience,
+                issuer: issuer,
+                audience: audience,
                 expires: DateTime.Now.AddDays(7),
                 signingCredentials: credentials,
                 claims: claims

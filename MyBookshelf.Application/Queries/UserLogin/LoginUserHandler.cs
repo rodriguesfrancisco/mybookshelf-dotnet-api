@@ -33,7 +33,7 @@ namespace MyBookshelf.Application.Queries.UserLogin
 
             if (command.Invalid) return Task.FromResult<LoginUserViewModel>(null);
 
-            return Task.FromResult(new LoginUserViewModel(user.Email, _jwtProvider.GenerateToken(user.Email)));
+            return Task.FromResult(new LoginUserViewModel(user.Email, _jwtProvider.GenerateToken(user.Email, user.Id)));
         }
     }
 }

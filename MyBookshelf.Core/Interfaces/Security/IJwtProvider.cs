@@ -6,6 +6,6 @@ namespace MyBookshelf.Core.Interfaces.Security
 {
     public interface IJwtProvider
     {
-        string GenerateToken(string email);
+        string GenerateToken(string email, int userId);
     }
 }

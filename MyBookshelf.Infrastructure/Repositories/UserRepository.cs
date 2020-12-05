@@ -40,7 +40,7 @@ namespace MyBookshelf.Infrastructure.Repositories
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("Default")))
             {
-                var sql = "SELECT TOP (1) Email FROM Usuario WHERE Email = @Email AND Senha = @Senha;";
+                var sql = "SELECT TOP (1) Id, Email FROM Usuario WHERE Email = @Email AND Senha = @Senha;";
 
                 return connection.Query<User>(sql, new { Email = email, Senha = senha }).SingleOrDefault();
             }
