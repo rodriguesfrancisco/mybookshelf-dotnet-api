@@ -9,5 +9,6 @@ namespace MyBookshelf.Core.Interfaces.Repositories
     {
         User GetById(int id);
         void Add(User user);
+        User LoginUser(string email, string password);
     }
 }

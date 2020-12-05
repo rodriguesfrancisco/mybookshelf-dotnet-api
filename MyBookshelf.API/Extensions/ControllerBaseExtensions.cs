@@ -18,8 +18,13 @@ namespace MyBookshelf.API.Extensions
                 return controller.BadRequest(command.Notifications);
             }
             else
-            {
+            {                
                 mediator.Send(command);
+                if (command.Invalid)
+                {
+                    return controller.BadRequest(command.Notifications);
+                }
+
                 return controller.Ok();
             }
         }
@@ -34,6 +39,10 @@ namespace MyBookshelf.API.Extensions
             else
             {
                 var result = mediator.Send(command);
+                if (command.Invalid)
+                {
+                    return controller.BadRequest(command.Notifications);
+                }
                 return controller.Ok(result.Result);
             }
         }

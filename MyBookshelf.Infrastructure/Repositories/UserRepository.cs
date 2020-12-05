@@ -35,5 +35,15 @@ namespace MyBookshelf.Infrastructure.Repositories
                 connection.Execute(sql, user);
             }
         }
+
+        public User LoginUser(string email, string senha)
+        {
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("Default")))
+            {
+                var sql = "SELECT TOP (1) Email FROM Usuario WHERE Email = @Email AND Senha = @Senha;";
+
+                return connection.Query<User>(sql, new { Email = email, Senha = senha }).SingleOrDefault();
+            }
+        }
     }
 }

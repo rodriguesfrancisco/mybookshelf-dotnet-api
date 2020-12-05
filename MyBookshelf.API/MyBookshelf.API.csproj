@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>95962969-97b0-430e-a4e2-d9d5c35a8404</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +16,4 @@
     <ProjectReference Include="..\MyBookshelf.Application\MyBookshelf.Application.csproj" />
   </ItemGroup>
   
-  
-
-
 </Project>

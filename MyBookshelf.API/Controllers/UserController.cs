@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyBookshelf.API.Extensions;
 using MyBookshelf.Application.Commands.CreateUser;
 using MyBookshelf.Application.Queries.GetUserById;
+using MyBookshelf.Application.Queries.UserLogin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,12 @@ namespace MyBookshelf.API.Controllers
         {
             var getUserByIdCommand = new GetUserById() { Id = id };
             return this.ProcessCommand(getUserByIdCommand, _mediator);
+        }
+
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginUser command)
+        {
+            return this.ProcessCommand(command, _mediator);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using MyBookshelf.Application.Queries.UserLogin;
 using MyBookshelf.Core.Entities;
 using MyBookshelf.Core.Interfaces.Repositories;
 using System;
@@ -18,7 +19,11 @@ namespace MyBookshelf.Application.Commands.CreateUser
         }
         public Task<Unit> Handle(CreateUser command, CancellationToken cancellationToken)
         {
-            var user = new User(command.Nome, command.Email, command.Senha);
+            var user = new User(
+                command.Nome, 
+                command.Email, 
+                LoginService.ComputeSha256Hash(command.Senha)
+            );
             _userRepository.Add(user);
             return Task.FromResult(Unit.Value);
         }
