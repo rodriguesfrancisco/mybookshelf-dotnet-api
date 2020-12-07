@@ -1,0 +1,31 @@
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MyBookshelf.API.Extensions;
+using MyBookshelf.Application.Queries.SearchBook;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace MyBookshelf.API.Controllers
+{
+    [Route("api/books")]
+    [Authorize]
+    public class BooksController : ControllerBase
+    {
+        private readonly IMediator _mediator;
+
+        public BooksController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpGet]
+        public IActionResult SearchBook([FromQuery] string q)
+        {
+            var searchBookQuery = new SearchBook(q);
+            return this.ProcessCommand(searchBookQuery, _mediator);
+        }
+    }
+}
