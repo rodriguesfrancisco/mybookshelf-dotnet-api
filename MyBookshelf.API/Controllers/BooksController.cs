@@ -22,9 +22,9 @@ namespace MyBookshelf.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult SearchBook([FromQuery] string q)
+        public IActionResult SearchBook([FromQuery] string q, [FromQuery] int page)
         {
-            var searchBookQuery = new SearchBook(q);
+            var searchBookQuery = new SearchBook(q, page);
             return this.ProcessCommand(searchBookQuery, _mediator);
         }
     }
