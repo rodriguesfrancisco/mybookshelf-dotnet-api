@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MyBookshelf.Core.Entities
+namespace MyBookshelf.Application.Queries.SearchBook
 {
-    public class ISBN
+    public class ISBNViewModel
     {
         public string Type { get; set; }
         public string Identifier { get; set; }
