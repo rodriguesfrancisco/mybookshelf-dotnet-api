@@ -59,7 +59,7 @@ namespace MyBookshelf.Infrastructure.Repositories
             }
         }
 
-        public void Save(Book book)
+        public int Save(Book book)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("Default")))
             {
@@ -99,10 +99,12 @@ namespace MyBookshelf.Infrastructure.Repositories
                         }
 
                         transaction.Commit();
+
+                        return insertedBookId;
                     } catch(Exception e)
                     {
                         transaction.Rollback();
-                        throw;
+                        throw e;
                     }
                     
                 }

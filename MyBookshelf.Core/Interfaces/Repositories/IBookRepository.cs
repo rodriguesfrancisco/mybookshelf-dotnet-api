@@ -11,6 +11,6 @@ namespace MyBookshelf.Core.Interfaces.Repositories
     {
         Task<PagedList<object>> Search(string searchTerm, int page, int pageSize);
         Book FindByIsbn(string isbn);
-        void Save(Book book);
+        int Save(Book book);
     }
 }

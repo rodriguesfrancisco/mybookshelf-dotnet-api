@@ -17,13 +17,20 @@ namespace MyBookshelf.Application.Commands.CreateBookUser
         private readonly IBookRepository _bookRepository;
         private readonly IAuthorRepository _authorRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IUserBookRepository _userBookRepository;
 
-        public CreateBookUserHandler(IUserRepository userRepository, IBookRepository bookRepository, IAuthorRepository authorRepository, ICategoryRepository categoryRepository)
+        public CreateBookUserHandler(
+            IUserRepository userRepository,
+            IBookRepository bookRepository,
+            IAuthorRepository authorRepository,
+            ICategoryRepository categoryRepository,
+            IUserBookRepository userBookRepository)
         {
             _userRepository = userRepository;
             _bookRepository = bookRepository;
             _authorRepository = authorRepository;
             _categoryRepository = categoryRepository;
+            _userBookRepository = userBookRepository;
         }
 
         public Task<Unit> Handle(CreateBookUser command, CancellationToken cancellationToken)
@@ -43,7 +50,7 @@ namespace MyBookshelf.Application.Commands.CreateBookUser
                 .FirstOrDefault();
 
             var bookByIsbn = _bookRepository.FindByIsbn(isbn);
-
+            var bookId = bookByIsbn.Id;
             if(bookByIsbn == null)
             {
                 var book = new Book(
@@ -83,8 +90,11 @@ namespace MyBookshelf.Application.Commands.CreateBookUser
                     }
                 }
 
-                _bookRepository.Save(book);
+                bookId = _bookRepository.Save(book);
             }
+
+            var userBook = new UserBook(user.Id, bookId);
+            _userBookRepository.Save(userBook);
 
             return Task.FromResult(Unit.Value);
         }

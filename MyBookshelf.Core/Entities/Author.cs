@@ -6,7 +6,7 @@ namespace MyBookshelf.Core.Entities
 {
     public class Author
     {
-        public int? Id { get; set; }
+        public int? Id { get; private set; }
         public string Name { get; private set; }
         public Author(string name)
         {
