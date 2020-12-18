@@ -8,10 +8,13 @@ namespace MyBookshelf.Core.Entities
     {
         public int UserId { get; private set; }
         public int BookId { get; private set; }
-        public UserBook(int userId, int bookId)
+        public int StatusId { get; private set; }
+
+        public UserBook(int userId, int bookId, int statusId)
         {
             UserId = userId;
             BookId = bookId;
+            StatusId = statusId;
         }
     }
 }

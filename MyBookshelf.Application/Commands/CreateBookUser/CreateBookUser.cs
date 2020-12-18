@@ -19,6 +19,7 @@ namespace MyBookshelf.Application.Commands.CreateBookUser
         public int PageCount { get; set; }
         public IList<string> Categories { get; set; }
         public BookImageLinksViewModel ImageLinks { get; set; }
+        public int IdStatus { get; set; }
         public override void Validate()
         {
             AddNotifications(new Contract()

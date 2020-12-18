@@ -50,7 +50,7 @@ namespace MyBookshelf.Application.Commands.CreateBookUser
                 .FirstOrDefault();
 
             var bookByIsbn = _bookRepository.FindByIsbn(isbn);
-            var bookId = bookByIsbn.Id;
+            var bookId = bookByIsbn?.Id;
             if(bookByIsbn == null)
             {
                 var book = new Book(
@@ -93,7 +93,7 @@ namespace MyBookshelf.Application.Commands.CreateBookUser
                 bookId = _bookRepository.Save(book);
             }
 
-            var userBook = new UserBook(user.Id, bookId);
+            var userBook = new UserBook(user.Id, bookId.Value, command.IdStatus);
             _userBookRepository.Save(userBook);
 
             return Task.FromResult(Unit.Value);

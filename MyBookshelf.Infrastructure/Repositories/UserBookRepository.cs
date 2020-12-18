@@ -22,9 +22,9 @@ namespace MyBookshelf.Infrastructure.Repositories
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("Default")))
             {
-                var sql = "INSERT INTO BookUser(IdUser, IdBook) VALUES(@IdUser, @IdBook);";
+                var sql = "INSERT INTO BookUser(IdUser, IdBook, IdStatus) VALUES(@IdUser, @IdBook, @IdStatus);";
 
-                connection.Execute(sql, new { IdUser = userBook.UserId, IdBook = userBook.BookId });
+                connection.Execute(sql, new { IdUser = userBook.UserId, IdBook = userBook.BookId, IdStatus = userBook.StatusId });
             }
         }
     }
