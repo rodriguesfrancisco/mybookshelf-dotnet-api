@@ -19,6 +19,13 @@ namespace MyBookshelf.Application.Commands.CreateUser
         }
         public Task<Unit> Handle(CreateUser command, CancellationToken cancellationToken)
         {
+            var emailExists = _userRepository.EmailExists(command.Email);
+            if (emailExists)
+            {
+                command.AddNotification("Email", "Email already exists.");
+                return Task.FromResult(Unit.Value);
+            }
+
             var user = new User(
                 command.Nome, 
                 command.Email, 

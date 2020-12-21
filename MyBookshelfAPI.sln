@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBookshelf.API", "MyBookshelf.API\MyBookshelf.API.csproj", "{B17A1C70-633F-4231-AD7A-E0EDD1F1486E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBookshelf.API", "MyBookshelf.API\MyBookshelf.API.csproj", "{B17A1C70-633F-4231-AD7A-E0EDD1F1486E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBookshelf.Application", "MyBookshelf.Application\MyBookshelf.Application.csproj", "{A405CB5B-1D9C-43AF-BF76-5749B06D1E92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBookshelf.Application", "MyBookshelf.Application\MyBookshelf.Application.csproj", "{A405CB5B-1D9C-43AF-BF76-5749B06D1E92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBookshelf.Infrastructure", "MyBookshelf.Infrastructure\MyBookshelf.Infrastructure.csproj", "{0EAEAB79-D51B-4367-862D-5CF55A963CF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBookshelf.Infrastructure", "MyBookshelf.Infrastructure\MyBookshelf.Infrastructure.csproj", "{0EAEAB79-D51B-4367-862D-5CF55A963CF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBookshelf.Core", "MyBookshelf.Core\MyBookshelf.Core.csproj", "{C7692889-1685-4ABA-B24B-6FA93239AB99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBookshelf.Core", "MyBookshelf.Core\MyBookshelf.Core.csproj", "{C7692889-1685-4ABA-B24B-6FA93239AB99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBookshelf.Tests", "MyBookshelf.Tests\MyBookshelf.Tests.csproj", "{BC356979-F33C-49F1-B420-BAF28A96635E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C7692889-1685-4ABA-B24B-6FA93239AB99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7692889-1685-4ABA-B24B-6FA93239AB99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7692889-1685-4ABA-B24B-6FA93239AB99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC356979-F33C-49F1-B420-BAF28A96635E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC356979-F33C-49F1-B420-BAF28A96635E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC356979-F33C-49F1-B420-BAF28A96635E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC356979-F33C-49F1-B420-BAF28A96635E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
