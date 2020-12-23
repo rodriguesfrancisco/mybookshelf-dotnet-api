@@ -6,15 +6,19 @@ namespace MyBookshelf.Core.Entities
 {
     public class UserBook
     {
-        public int UserId { get; private set; }
-        public int BookId { get; private set; }
-        public int StatusId { get; private set; }
+        public int Id { get; private set; }
+        public User User { get; private set; }
+        public Book Book { get; private set; }
+        public Status Status { get; private set; }
+        public DateTime ConclusionDate { get; private set; }
+        public int Rating { get; private set; }
 
-        public UserBook(int userId, int bookId, int statusId)
+        public UserBook(User user, Book book, Status status)
         {
-            UserId = userId;
-            BookId = bookId;
-            StatusId = statusId;
+            User = user;
+            Book = book;
+            Status = status;
         }
+        protected UserBook() { }
     }
 }
