@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using MyBookshelf.Application.ViewModels;
 using MyBookshelf.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;

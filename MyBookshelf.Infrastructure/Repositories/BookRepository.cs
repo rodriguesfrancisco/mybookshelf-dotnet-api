@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
 using MyBookshelf.Application.Queries.SearchBook;
+using MyBookshelf.Application.ViewModels;
 using MyBookshelf.Core.Entities;
 using MyBookshelf.Core.Interfaces.Repositories;
 using MyBookshelf.Core.Utils;
@@ -41,7 +42,7 @@ namespace MyBookshelf.Infrastructure.Repositories
                     foreach (var result in apiResponseDeserialized)
                     {
                         var volumeInfo = result.SelectToken("volumeInfo");
-                        var bookViewModel = JsonConvert.DeserializeObject<BookViewModel>(volumeInfo.ToString());
+                        var bookViewModel = JsonConvert.DeserializeObject<SearchBookViewModel>(volumeInfo.ToString());
                         booksList.Add(bookViewModel);
                     }
                     return new PagedList<object>(booksList, (int)totalItems, page, pageSize);

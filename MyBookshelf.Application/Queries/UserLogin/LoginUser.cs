@@ -1,5 +1,6 @@
 ﻿using Flunt.Validations;
 using MyBookshelf.Application.Commands;
+using MyBookshelf.Application.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;

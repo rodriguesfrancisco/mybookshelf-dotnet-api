@@ -1,5 +1,6 @@
 ﻿using Flunt.Validations;
 using MyBookshelf.Application.Queries.SearchBook;
+using MyBookshelf.Application.ViewModels;
 using MyBookshelf.Core.Entities;
 using System;
 using System.Collections.Generic;

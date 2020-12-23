@@ -19,14 +19,16 @@ namespace MyBookshelf.Application.Commands.CreateBookUser
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUserBookRepository _userBookRepository;
         private readonly IStatusRepository _statusRepository;
+        private readonly IStatusHistoryRepository _statusHistoryRepository;
 
         public CreateBookUserHandler(
             IUserRepository userRepository,
             IBookRepository bookRepository,
             IAuthorRepository authorRepository,
             ICategoryRepository categoryRepository,
-            IUserBookRepository userBookRepository, 
-            IStatusRepository statusRepository)
+            IUserBookRepository userBookRepository,
+            IStatusRepository statusRepository, 
+            IStatusHistoryRepository statusHistoryRepository)
         {
             _userRepository = userRepository;
             _bookRepository = bookRepository;
@@ -34,6 +36,7 @@ namespace MyBookshelf.Application.Commands.CreateBookUser
             _categoryRepository = categoryRepository;
             _userBookRepository = userBookRepository;
             _statusRepository = statusRepository;
+            _statusHistoryRepository = statusHistoryRepository;
         }
 
         public Task<Unit> Handle(CreateBookUser command, CancellationToken cancellationToken)
@@ -101,12 +104,17 @@ namespace MyBookshelf.Application.Commands.CreateBookUser
                     }
                 }
 
-                _bookRepository.Save(newBook);
+                var bookId = _bookRepository.Save(newBook);
+                newBook.Id = bookId;
                 book = newBook;
             }
 
             var userBook = new UserBook(user, book, status);
-            _userBookRepository.Save(userBook);
+            var userBookId = _userBookRepository.Save(userBook);
+            userBook.Id = userBookId;
+
+            var statusHistory = new StatusHistory(userBook, status);
+            _statusHistoryRepository.Save(statusHistory);
 
             return Task.FromResult(Unit.Value);
         }

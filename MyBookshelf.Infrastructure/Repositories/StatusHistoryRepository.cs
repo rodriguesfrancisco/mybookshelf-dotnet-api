@@ -5,27 +5,26 @@ using MyBookshelf.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
 
 namespace MyBookshelf.Infrastructure.Repositories
 {
-    public class StatusRepository : IStatusRepository
+    public class StatusHistoryRepository : IStatusHistoryRepository
     {
         private readonly IConfiguration _configuration;
 
-        public StatusRepository(IConfiguration configuration)
+        public StatusHistoryRepository(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public Status FindById(int id)
+        public void Save(StatusHistory statusHistory)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("Default")))
             {
-                var sql = "SELECT * FROM Status WHERE Id = @Id";
+                var sql = "INSERT INTO StatusHistory VALUES(@IdUserBook, @IdStatus, @Date);";
 
-                return connection.Query<Status>(sql, new { Id = id }).SingleOrDefault();
+                connection.Execute(sql, new { IdUserBook = statusHistory.UserBook.Id, IdStatus = statusHistory.Status.Id, Date = statusHistory.Date });
             }
         }
     }

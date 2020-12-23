@@ -1,3 +1,4 @@
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +13,8 @@ using Microsoft.IdentityModel.Tokens;
 using MyBookshelf.API.Extensions;
 using MyBookshelf.Application.Commands.CreateUser;
 using MyBookshelf.Application.Security;
+using MyBookshelf.Application.ViewModels;
+using MyBookshelf.Core.Entities;
 using MyBookshelf.Core.Interfaces.Security;
 using System;
 using System.Collections.Generic;
@@ -54,6 +57,19 @@ namespace MyBookshelf.API
             services.AddRepositories()
                 .AddMediatR(typeof(CreateUser))
                 .AddScoped<IJwtProvider, JwtProvider>();
+            
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.CreateMap<User, UserViewModel>();
+                cfg.CreateMap<Book, BookViewModel>();
+                cfg.CreateMap<UserBook, UserBookViewModel>();
+                cfg.CreateMap<Status, StatusViewModel>();
+                cfg.CreateMap<StatusHistory, StatusHistoryViewModel>();
+                cfg.CreateMap<Category, CategoryViewModel>();
+                cfg.CreateMap<Author, AuthorViewModel>();
+            });
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

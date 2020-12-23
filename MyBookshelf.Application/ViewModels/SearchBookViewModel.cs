@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MyBookshelf.Application.Queries.SearchBook
+namespace MyBookshelf.Application.ViewModels
 {
-    public class BookViewModel
+    public class SearchBookViewModel
     {
         public string Title { get; set; }
         public string Subtitle { get; set; }

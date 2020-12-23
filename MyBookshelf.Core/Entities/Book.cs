@@ -6,7 +6,7 @@ namespace MyBookshelf.Core.Entities
 {
     public class Book
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public string Title { get; private set; }
         public string Subtitle { get; private set; }
         public string Publisher { get; private set; }
@@ -39,7 +39,11 @@ namespace MyBookshelf.Core.Entities
             Categories = new List<Category>();
             Authors = new List<Author>();
         }
-        protected Book() { }
+        protected Book() 
+        {
+            Authors = new List<Author>();
+            Categories = new List<Category>();
+        }
 
         public void AddAuthor(Author author)
         {            

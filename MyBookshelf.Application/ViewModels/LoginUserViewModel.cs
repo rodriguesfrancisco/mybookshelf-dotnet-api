@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MyBookshelf.Application.Queries.UserLogin
+namespace MyBookshelf.Application.ViewModels
 {
     public class LoginUserViewModel
     {

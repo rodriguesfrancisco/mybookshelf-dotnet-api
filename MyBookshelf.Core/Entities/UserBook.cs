@@ -6,12 +6,13 @@ namespace MyBookshelf.Core.Entities
 {
     public class UserBook
     {
-        public int Id { get; private set; }
-        public User User { get; private set; }
-        public Book Book { get; private set; }
-        public Status Status { get; private set; }
-        public DateTime ConclusionDate { get; private set; }
-        public int Rating { get; private set; }
+        public int Id { get; set; }
+        public User User { get; set; }
+        public Book Book { get; set; }
+        public Status Status { get; set; }
+        public DateTime? ConclusionDate { get; set; }
+        public int Rating { get; set; }
+        public List<StatusHistory> StatusHistories { get; set; }
 
         public UserBook(User user, Book book, Status status)
         {
@@ -19,6 +20,14 @@ namespace MyBookshelf.Core.Entities
             Book = book;
             Status = status;
         }
-        protected UserBook() { }
+
+        public void UpdateStatus(Status newStatus)
+        {
+            Status = newStatus;
+        }
+        protected UserBook() 
+        {
+            StatusHistories = new List<StatusHistory>();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Flunt.Validations;
 using MediatR;
+using MyBookshelf.Application.ViewModels;
 using MyBookshelf.Core.Interfaces.Repositories;
 using MyBookshelf.Core.Interfaces.Security;
 using System;

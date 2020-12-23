@@ -5,9 +5,8 @@ using System.Text;
 
 namespace MyBookshelf.Core.Interfaces.Repositories
 {
-    public interface IUserBookRepository
+    public interface IStatusHistoryRepository
     {
-        int Save(UserBook userBook);
-        UserBook FindByUserIdAndBookId(int userId, int bookId);
+        void Save(StatusHistory statusHistory);
     }
 }
