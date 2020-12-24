@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyBookshelf.API.Extensions;
+using MyBookshelf.Application.Commands.UpdateUserBookStatus;
 using MyBookshelf.Application.Queries.GetUserBook;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,14 @@ namespace MyBookshelf.API.Controllers
         {
             var userId = HttpContext.User.Identity.UserId();
             var command = new GetUserBook() { BookId = bookId, UserId = userId.Value };
+            return this.ProcessCommand(command, _mediator);
+        }
+
+        [HttpPut]
+        [Route("status")]
+        public IActionResult UpdateStatusUserBook([FromBody] UpdateUserBookStatus command)
+        {
+            command.UserId = HttpContext.User.Identity.UserId().Value;
             return this.ProcessCommand(command, _mediator);
         }
     }

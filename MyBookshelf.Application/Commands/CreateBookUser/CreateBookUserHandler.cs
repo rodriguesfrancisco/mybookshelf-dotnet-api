@@ -19,7 +19,6 @@ namespace MyBookshelf.Application.Commands.CreateBookUser
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUserBookRepository _userBookRepository;
         private readonly IStatusRepository _statusRepository;
-        private readonly IStatusHistoryRepository _statusHistoryRepository;
 
         public CreateBookUserHandler(
             IUserRepository userRepository,
@@ -27,8 +26,7 @@ namespace MyBookshelf.Application.Commands.CreateBookUser
             IAuthorRepository authorRepository,
             ICategoryRepository categoryRepository,
             IUserBookRepository userBookRepository,
-            IStatusRepository statusRepository, 
-            IStatusHistoryRepository statusHistoryRepository)
+            IStatusRepository statusRepository)
         {
             _userRepository = userRepository;
             _bookRepository = bookRepository;
@@ -36,7 +34,6 @@ namespace MyBookshelf.Application.Commands.CreateBookUser
             _categoryRepository = categoryRepository;
             _userBookRepository = userBookRepository;
             _statusRepository = statusRepository;
-            _statusHistoryRepository = statusHistoryRepository;
         }
 
         public Task<Unit> Handle(CreateBookUser command, CancellationToken cancellationToken)
@@ -110,11 +107,7 @@ namespace MyBookshelf.Application.Commands.CreateBookUser
             }
 
             var userBook = new UserBook(user, book, status);
-            var userBookId = _userBookRepository.Save(userBook);
-            userBook.Id = userBookId;
-
-            var statusHistory = new StatusHistory(userBook, status);
-            _statusHistoryRepository.Save(statusHistory);
+            var userBookId = _userBookRepository.Save(userBook);            
 
             return Task.FromResult(Unit.Value);
         }

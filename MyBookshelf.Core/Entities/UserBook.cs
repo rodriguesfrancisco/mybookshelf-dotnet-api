@@ -18,12 +18,14 @@ namespace MyBookshelf.Core.Entities
         {
             User = user;
             Book = book;
-            Status = status;
+            StatusHistories = new List<StatusHistory>();
+            UpdateStatus(status);
         }
 
         public void UpdateStatus(Status newStatus)
         {
             Status = newStatus;
+            StatusHistories.Add(new StatusHistory(this));
         }
         protected UserBook() 
         {

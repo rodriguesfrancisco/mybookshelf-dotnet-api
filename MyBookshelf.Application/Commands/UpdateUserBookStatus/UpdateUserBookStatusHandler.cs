@@ -1,5 +1,6 @@
 ﻿using Flunt.Validations;
 using MediatR;
+using MyBookshelf.Core.Entities;
 using MyBookshelf.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,16 @@ namespace MyBookshelf.Application.Commands.UpdateUserBookStatus
     {
         private readonly IUserRepository _userRepository;
         private readonly IStatusRepository _statusRepository;
+        private readonly IUserBookRepository _userBookRepository;
 
-        public UpdateUserBookStatusHandler(IUserRepository userRepository, IStatusRepository statusRepository)
+        public UpdateUserBookStatusHandler(
+            IUserRepository userRepository,
+            IStatusRepository statusRepository,
+            IUserBookRepository userBookRepository)
         {
             _userRepository = userRepository;
             _statusRepository = statusRepository;
+            _userBookRepository = userBookRepository;
         }
 
         public Task<Unit> Handle(UpdateUserBookStatus command, CancellationToken cancellationToken)
@@ -35,6 +41,10 @@ namespace MyBookshelf.Application.Commands.UpdateUserBookStatus
                 .Requires()
                 .IsNotNull(status, "Status", "Status not found")
             );
+
+            var userBook = _userBookRepository.FindByUserIdAndBookId(user.Id, command.BookId);
+            userBook.UpdateStatus(status);
+            _userBookRepository.Update(userBook);
 
             return Task.FromResult(Unit.Value);
         }

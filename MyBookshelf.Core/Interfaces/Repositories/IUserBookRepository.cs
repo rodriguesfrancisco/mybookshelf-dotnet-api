@@ -9,5 +9,6 @@ namespace MyBookshelf.Core.Interfaces.Repositories
     {
         int Save(UserBook userBook);
         UserBook FindByUserIdAndBookId(int userId, int bookId);
+        void Update(UserBook userBook);
     }
 }

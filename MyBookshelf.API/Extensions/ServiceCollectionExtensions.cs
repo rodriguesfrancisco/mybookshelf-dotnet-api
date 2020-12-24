@@ -18,7 +18,6 @@ namespace MyBookshelf.API.Extensions
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IUserBookRepository, UserBookRepository>();
             services.AddScoped<IStatusRepository, StatusRepository>();
-            services.AddScoped<IStatusHistoryRepository, StatusHistoryRepository>();
 
             return services;
         }

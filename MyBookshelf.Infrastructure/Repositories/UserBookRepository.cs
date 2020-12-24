@@ -23,9 +23,19 @@ namespace MyBookshelf.Infrastructure.Repositories
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("Default")))
             {
-                var sql = "INSERT INTO BookUser(IdUser, IdBook, IdStatus) VALUES(@IdUser, @IdBook, @IdStatus); SELECT SCOPE_IDENTITY();";
+                connection.Open();
 
-                return connection.ExecuteScalar<int>(sql, new { IdUser = userBook.User.Id, IdBook = userBook.Book.Id, IdStatus = userBook.Status.Id });
+                using (var transaction = connection.BeginTransaction())
+                {
+                    var sql = "INSERT INTO BookUser(IdUser, IdBook, IdStatus) VALUES(@IdUser, @IdBook, @IdStatus); SELECT SCOPE_IDENTITY();";
+
+                    var userBookId = connection.ExecuteScalar<int>(sql, new { IdUser = userBook.User.Id, IdBook = userBook.Book.Id, IdStatus = userBook.Status.Id }, transaction);
+                    userBook.Id = userBookId;
+
+                    SaveStatusHistories(userBook, connection, transaction);
+                    transaction.Commit();
+                    return userBookId;
+                }
             }
         }
 
@@ -61,8 +71,8 @@ namespace MyBookshelf.Infrastructure.Repositories
                         return userBook;
                     }, new { IdUser = userId, IdBook = bookId }, splitOn: "UserBookId, BookId, StatusId, UserId, AuthorId, CategoryId").SingleOrDefault();
 
-                var sqlStatusHistory = @"SELECT SH.Id AS StatusHistoryId, SH.Date,
-                                          S.Id AS StatusId, S.Description
+                var sqlStatusHistory = @"SELECT SH.Id AS StatusHistoryId, SH.Id, SH.Date,
+                                          S.Id AS StatusId, S.Id, S.Description
                                         FROM StatusHistory SH
                                           INNER JOIN Status S ON S.Id = SH.IdStatus
                                         WHERE SH.IdUserBook = @IdUserBook";
@@ -79,6 +89,46 @@ namespace MyBookshelf.Infrastructure.Repositories
                 return userBook;
             }
                 
+        }
+
+        public void Update(UserBook userBook)
+        {
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("Default")))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    var sql = "UPDATE BookUser SET IdStatus = @IdStatus, ConclusionDate = @ConclusionDate, Rating = @Rating WHERE Id = @Id;";
+
+                    connection.Execute(sql, new 
+                    { 
+                        IdStatus = userBook.Status.Id,
+                        userBook.ConclusionDate,
+                        userBook.Rating,
+                        userBook.Id
+                    }, transaction);
+                    SaveStatusHistories(userBook, connection, transaction);
+                    transaction.Commit();
+                }
+                
+            }
+        }
+
+        private void SaveStatusHistories(UserBook userBook, SqlConnection connection, SqlTransaction transaction)
+        {
+            var sqlStatusHistory = "INSERT INTO StatusHistory VALUES(@IdUserBook, @IdStatus, @Date);";
+            foreach (var statusHistory in userBook.StatusHistories)
+            {
+                if (statusHistory.Id == null)
+                {
+                    connection.Execute(sqlStatusHistory, new 
+                    { 
+                        IdUserBook = statusHistory.UserBook.Id, 
+                        IdStatus = statusHistory.Status.Id,
+                        statusHistory.Date
+                    } , transaction);
+                }
+            }
         }
     }
 }
