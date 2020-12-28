@@ -91,6 +91,39 @@ namespace MyBookshelf.Infrastructure.Repositories
                 
         }
 
+        public List<UserBook> ListByUserId(int userId)
+        {
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("Default")))
+            {
+                var sqlUserBook = @"SELECT BU.Id AS UserBookId, BU.Id, BU.ConclusionDate, BU.Rating,  
+                              B.Id AS BookId, B.Id, B.Description, B.Isbn, B.PageCount, B.Publisher, B.SmallThumbnail, B.Subtitle, B.Thumbnail, B.Title,
+                              S.Id AS StatusId, S.Id, S.Description,
+                              U.Id AS UserId, U.Id, U.Email, U.Nome,
+                              A.Id AS AuthorId, A.Id, A.Name,
+                              C.Id AS CategoryId, C.Id, C.Name
+                            FROM [Book] B
+                              INNER JOIN BookUser BU ON B.Id = BU.IdBook
+                              INNER JOIN Usuario U ON U.Id = BU.IdUser
+                              INNER JOIN Status S ON S.Id = BU.IdStatus  
+                              LEFT JOIN BookAuthor BA ON BA.IdBook = B.Id
+                              LEFT JOIN Author A ON BA.IdAuthor = A.Id
+                              LEFT JOIN BookCategory BC ON BC.IdBook = B.Id
+                              LEFT JOIN Category C ON C.Id = BC.IdCategory
+                            WHERE BU.IdUser = @IdUser;";
+
+                return connection.Query<UserBook, Book, Status, User, Author, Category, UserBook>(sqlUserBook,
+                    map: (userBook, book, status, user, author, category) =>
+                    {
+                        book.AddAuthor(author);
+                        book.AddCategory(category);
+                        userBook.Book = book;
+                        userBook.Status = status;
+                        userBook.User = user;
+                        return userBook;
+                    }, new { IdUser = userId }, splitOn: "UserBookId, BookId, StatusId, UserId, AuthorId, CategoryId").ToList();
+            }
+        }
+
         public void Update(UserBook userBook)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("Default")))

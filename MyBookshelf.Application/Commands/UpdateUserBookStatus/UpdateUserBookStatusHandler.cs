@@ -35,6 +35,8 @@ namespace MyBookshelf.Application.Commands.UpdateUserBookStatus
                 .IsNotNull(user, "User", "User not found")
             );
 
+            if (command.Invalid) return Task.FromResult(Unit.Value);
+
             var status = _statusRepository.FindById(command.StatusId);
 
             command.AddNotifications(new Contract()
@@ -42,7 +44,17 @@ namespace MyBookshelf.Application.Commands.UpdateUserBookStatus
                 .IsNotNull(status, "Status", "Status not found")
             );
 
+            if (command.Invalid) return Task.FromResult(Unit.Value);
+
             var userBook = _userBookRepository.FindByUserIdAndBookId(user.Id, command.BookId);
+
+            command.AddNotifications(new Contract()
+                .Requires()
+                .IsNotNull(status, "UserBook", "UserBook not found")
+            );
+
+            if (command.Invalid) return Task.FromResult(Unit.Value);
+
             userBook.UpdateStatus(status);
             _userBookRepository.Update(userBook);
 

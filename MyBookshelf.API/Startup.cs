@@ -63,6 +63,7 @@ namespace MyBookshelf.API
                 cfg.CreateMap<User, UserViewModel>();
                 cfg.CreateMap<Book, BookViewModel>();
                 cfg.CreateMap<UserBook, UserBookViewModel>();
+                cfg.CreateMap<UserBook, UserBookResumedViewModel>();
                 cfg.CreateMap<Status, StatusViewModel>();
                 cfg.CreateMap<StatusHistory, StatusHistoryViewModel>();
                 cfg.CreateMap<Category, CategoryViewModel>();

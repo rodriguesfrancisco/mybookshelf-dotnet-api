@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyBookshelf.API.Extensions;
 using MyBookshelf.Application.Commands.UpdateUserBookStatus;
 using MyBookshelf.Application.Queries.GetUserBook;
+using MyBookshelf.Application.Queries.ListUserBooks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,15 @@ namespace MyBookshelf.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetUserBookFromUserIdAndBookId([FromQuery]int bookId)
+        public IActionResult ListUserBooks()
+        {
+            var userId = HttpContext.User.Identity.UserId();
+            var command = new ListUserBooks() { UserId = userId.Value };
+            return this.ProcessCommand(command, _mediator);
+        }
+
+        [HttpGet("{bookId}")]
+        public IActionResult GetUserBookFromUserIdAndBookId(int bookId)
         {
             var userId = HttpContext.User.Identity.UserId();
             var command = new GetUserBook() { BookId = bookId, UserId = userId.Value };
