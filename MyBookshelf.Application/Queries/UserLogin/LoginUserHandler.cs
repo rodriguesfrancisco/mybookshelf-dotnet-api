@@ -24,7 +24,7 @@ namespace MyBookshelf.Application.Queries.UserLogin
 
         public Task<LoginUserViewModel> Handle(LoginUser command, CancellationToken cancellationToken)
         {
-            var encryptedPassword = LoginService.ComputeSha256Hash(command.Senha);
+            var encryptedPassword = LoginService.ComputeSha256Hash(command.Password);
 
             var user = _userRepository.LoginUser(command.Email, encryptedPassword);
             command.AddNotifications(new Contract()

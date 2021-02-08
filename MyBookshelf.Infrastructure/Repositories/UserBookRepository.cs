@@ -46,12 +46,12 @@ namespace MyBookshelf.Infrastructure.Repositories
                 var sqlUserBook = @"SELECT BU.Id AS UserBookId, BU.Id, BU.ConclusionDate, BU.Rating,  
                               B.Id AS BookId, B.Id, B.Description, B.Isbn, B.PageCount, B.Publisher, B.SmallThumbnail, B.Subtitle, B.Thumbnail, B.Title,
                               S.Id AS StatusId, S.Id, S.Description,
-                              U.Id AS UserId, U.Id, U.Email, U.Nome,
+                              U.Id AS UserId, U.Id, U.Email, U.Name,
                               A.Id AS AuthorId, A.Id, A.Name,
                               C.Id AS CategoryId, C.Id, C.Name
                             FROM [Book] B
                               INNER JOIN BookUser BU ON B.Id = BU.IdBook
-                              INNER JOIN Usuario U ON U.Id = BU.IdUser
+                              INNER JOIN [User] U ON U.Id = BU.IdUser
                               INNER JOIN Status S ON S.Id = BU.IdStatus  
                               LEFT JOIN BookAuthor BA ON BA.IdBook = B.Id
                               LEFT JOIN Author A ON BA.IdAuthor = A.Id
@@ -98,12 +98,12 @@ namespace MyBookshelf.Infrastructure.Repositories
                 var sqlUserBook = @"SELECT BU.Id AS UserBookId, BU.Id, BU.ConclusionDate, BU.Rating,  
                               B.Id AS BookId, B.Id, B.Description, B.Isbn, B.PageCount, B.Publisher, B.SmallThumbnail, B.Subtitle, B.Thumbnail, B.Title,
                               S.Id AS StatusId, S.Id, S.Description,
-                              U.Id AS UserId, U.Id, U.Email, U.Nome,
+                              U.Id AS UserId, U.Id, U.Email, U.Name,
                               A.Id AS AuthorId, A.Id, A.Name,
                               C.Id AS CategoryId, C.Id, C.Name
                             FROM [Book] B
                               INNER JOIN BookUser BU ON B.Id = BU.IdBook
-                              INNER JOIN Usuario U ON U.Id = BU.IdUser
+                              INNER JOIN [User] U ON U.Id = BU.IdUser
                               INNER JOIN Status S ON S.Id = BU.IdStatus  
                               LEFT JOIN BookAuthor BA ON BA.IdBook = B.Id
                               LEFT JOIN Author A ON BA.IdAuthor = A.Id

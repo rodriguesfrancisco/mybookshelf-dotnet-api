@@ -6,12 +6,12 @@ namespace MyBookshelf.Application.ViewModels
 {
     public class UserViewModel
     {
-        public string Nome { get; private set; }
+        public string Name { get; private set; }
         public string Email { get; private set; }
 
-        public UserViewModel(string nome, string email)
+        public UserViewModel(string name, string email)
         {
-            Nome = nome;
+            Name = name;
             Email = email;
         }
     }

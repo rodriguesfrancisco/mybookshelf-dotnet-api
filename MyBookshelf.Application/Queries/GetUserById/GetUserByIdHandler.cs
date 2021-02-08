@@ -20,7 +20,7 @@ namespace MyBookshelf.Application.Queries.GetUserById
         public Task<UserViewModel> Handle(GetUserById query, CancellationToken cancellationToken)
         {
             var user = _userRepository.GetById(query.Id);
-            var userViewModel = new UserViewModel(user.Nome, user.Email);
+            var userViewModel = new UserViewModel(user.Name, user.Email);
 
             return Task.FromResult(userViewModel);
         }

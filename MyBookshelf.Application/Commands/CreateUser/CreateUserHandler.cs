@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Flunt.Validations;
+using MediatR;
 using MyBookshelf.Application.Queries.UserLogin;
 using MyBookshelf.Core.Entities;
 using MyBookshelf.Core.Interfaces.Repositories;
@@ -19,20 +20,25 @@ namespace MyBookshelf.Application.Commands.CreateUser
         }
         public Task<Unit> Handle(CreateUser command, CancellationToken cancellationToken)
         {
-            var emailExists = _userRepository.EmailExists(command.Email);
-            if (emailExists)
-            {
-                command.AddNotification("Email", "Email already exists.");
-                return Task.FromResult(Unit.Value);
-            }
+            VerifyIfEmailExists(command);
+            if(command.Invalid) return Task.FromResult(Unit.Value);
 
             var user = new User(
-                command.Nome, 
+                command.Name, 
                 command.Email, 
-                LoginService.ComputeSha256Hash(command.Senha)
+                LoginService.ComputeSha256Hash(command.Password)
             );
             _userRepository.Add(user);
             return Task.FromResult(Unit.Value);
+        }
+
+        private void VerifyIfEmailExists(CreateUser command)
+        {
+            var emailExists = _userRepository.EmailExists(command.Email);
+            command.AddNotifications(new Contract()
+                .Requires()
+                .IsFalse(emailExists, "Email", "Email already exists.")
+            );
         }
     }
 }

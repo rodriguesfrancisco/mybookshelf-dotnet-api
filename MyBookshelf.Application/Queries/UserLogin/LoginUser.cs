@@ -10,13 +10,13 @@ namespace MyBookshelf.Application.Queries.UserLogin
     public class LoginUser : Command<LoginUserViewModel>
     {
         public string Email { get; set; }
-        public string Senha { get; set; }
+        public string Password { get; set; }
         public override void Validate()
         {
             AddNotifications(new Contract()
                 .Requires()
-                .IsNotNullOrEmpty(Email, "Email", "Email deve ser preenchido.")
-                .HasMinLen(Senha, 6, "Senha", "Senha deve ter um mínimo de 6 caracteres.")
+                .IsNotNullOrEmpty(Email, "Email", "Email must not be empty")
+                .HasMinLen(Password, 6, "Password", "Password must have a minimun of 6 characters")
             );
         }
     }

@@ -21,7 +21,7 @@ namespace MyBookshelf.Infrastructure.Repositories
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("Default")))
             {
-                var sql = "SELECT * FROM Usuario WHERE Id = @Id";
+                var sql = "SELECT * FROM [User] WHERE Id = @Id";
 
                 return connection.Query<User>(sql, new { Id = id }).SingleOrDefault();
             }
@@ -30,19 +30,19 @@ namespace MyBookshelf.Infrastructure.Repositories
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("Default")))
             {
-                var sql = "INSERT INTO Usuario VALUES (@Nome, @Email, @Senha);";
+                var sql = "INSERT INTO [User] VALUES (@Name, @Email, @Password);";
 
                 connection.Execute(sql, user);
             }
         }
 
-        public User LoginUser(string email, string senha)
+        public User LoginUser(string email, string password)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("Default")))
             {
-                var sql = "SELECT TOP (1) Id, Email FROM Usuario WHERE Email = @Email AND Senha = @Senha;";
+                var sql = "SELECT TOP (1) Id, Email FROM [User] WHERE Email = @Email AND Password = @Password;";
 
-                return connection.Query<User>(sql, new { Email = email, Senha = senha }).SingleOrDefault();
+                return connection.Query<User>(sql, new { Email = email, Password = password }).SingleOrDefault();
             }
         }
 
@@ -50,7 +50,7 @@ namespace MyBookshelf.Infrastructure.Repositories
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("Default")))
             {
-                var sql = "SELECT TOP (1) Id, Email FROM Usuario WHERE Email = @Email;";
+                var sql = "SELECT TOP (1) Id, Email FROM [User] WHERE Email = @Email;";
 
                 return connection.Query<User>(sql, new { Email = email }).Any();
             }

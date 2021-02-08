@@ -39,28 +39,19 @@ namespace MyBookshelf.Application.Commands.CreateBookUser
         public Task<Unit> Handle(CreateBookUser command, CancellationToken cancellationToken)
         {
             var user = _userRepository.GetById(command.UserId.GetValueOrDefault());
-
-            command.AddNotifications(new Contract()
-                .Requires()
-                .IsNotNull(user, "User", "User not found")
-            );
-
-            if (command.Invalid) return Task.FromResult(Unit.Value);
-
             var status = _statusRepository.FindById(command.IdStatus);
 
             command.AddNotifications(new Contract()
                 .Requires()
+                .IsNotNull(user, "User", "User not found")
                 .IsNotNull(status, "Status", "Status not found")
             );
-
-            if (command.Invalid) return Task.FromResult(Unit.Value);
 
             var isbn = command.IndustryIdentifiers
                 .Where(x => x.Type == "ISBN_13" || x.Type == "OTHER")
                 .Select(x => x.Identifier)
                 .FirstOrDefault();
-
+            
             var book = _bookRepository.FindByIsbn(isbn);
             if(book == null)
             {

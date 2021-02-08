@@ -27,7 +27,7 @@ namespace MyBookshelf.API.Controllers
         [HttpGet]
         public IActionResult ListUserBooks()
         {
-            var userId = HttpContext.User.Identity.UserId();
+            var userId = User.Identity.UserId();
             var command = new ListUserBooks() { UserId = userId.Value };
             return this.ProcessCommand(command, _mediator);
         }
@@ -35,7 +35,7 @@ namespace MyBookshelf.API.Controllers
         [HttpGet("{bookId}")]
         public IActionResult GetUserBookFromUserIdAndBookId(int bookId)
         {
-            var userId = HttpContext.User.Identity.UserId();
+            var userId = User.Identity.UserId();
             var command = new GetUserBook() { BookId = bookId, UserId = userId.Value };
             return this.ProcessCommand(command, _mediator);
         }
@@ -44,7 +44,7 @@ namespace MyBookshelf.API.Controllers
         [Route("status")]
         public IActionResult UpdateStatusUserBook([FromBody] UpdateUserBookStatus command)
         {
-            command.UserId = HttpContext.User.Identity.UserId().Value;
+            command.UserId = User.Identity.UserId().Value;
             return this.ProcessCommand(command, _mediator);
         }
     }
